@@ -1,0 +1,60 @@
+1) create github repo and clone it to computer
+
+2) npx create-react-app .
+
+3) npm install openai
+
+4) open an account on https://platform.openai.com/ or "beta.openai.com"
+and click on your on top right, then click on "api keys".
+Then click on "generate api keys" and copy your api keys.
+
+5) Create .env file and paste inside. 
+REACT_APP_OPENAI_API="sk-jP4CNnfVXX4OfvdejTE3Tr6BlbkFJnP1NjS2bkBwc2HUgItOW"
+
+6) create a .gitignore file and paste inside
+node_modules
+.env
+
+7) Copy paste this code to your App.js
+
+import { Configuration, OpenAIApi } from "openai";
+import { useState } from "react";
+
+function App() {
+  let [promptInput, setPromptInput] = useState("");
+  let [response, setResponse] = useState("hello");
+
+  const api = process.env.REACT_APP_CHATGPT_API;
+  const configuration = new Configuration({
+    apiKey: api
+  });
+  const openai = new OpenAIApi(configuration);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const response = await openai.createCompletion({
+      prompt: promptInput,
+      model: "text-davinci-003",
+      temperature: 0,
+      max_tokens: 1000,
+    })
+    const message = response.data.choices[0].text
+    setResponse(message);
+  }
+
+
+  return (
+    <div className="App">
+      <form onSubmit={handleSubmit}>
+        <input name="promptInput" value={promptInput}
+        onChange={(e) => setPromptInput(e.target.value)} />
+        <button>SUBMIT</button>
+      </form>
+      <div>{response}</div>
+    </div>
+  );
+}
+
+export default App;
+
+8) On Netlify, add your .env key-values to Netlify environment variables
+
