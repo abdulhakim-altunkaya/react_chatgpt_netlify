@@ -28,7 +28,7 @@ function App() {
       <form onSubmit={handleSubmit}>
         <input name="promptInput" value={promptInput}
         onChange={(e) => setPromptInput(e.target.value)} />
-        <button>SUBMIT</button>
+        <button>SUBMIT QUESTION</button>
       </form>
       <div>{response}</div>
     </div>
